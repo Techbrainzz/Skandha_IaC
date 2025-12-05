@@ -1,7 +1,7 @@
 locals{
     common_tags = {
         Owner       = "techbrainzz"
-        Environment = "P1"
+        Environment = "Prod"
         Project     = "Skandha_Server"
     }
 }
