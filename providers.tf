@@ -17,5 +17,5 @@ provider "proxmox" {
   endpoint = "https://192.168.9.224:8006/"
   insecure = true
   username = var.username
-  password = var.password
+  password = "J@rus2002197168"
 }
