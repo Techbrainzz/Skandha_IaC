@@ -1,68 +1,98 @@
 #############################
+### Grafana LXC container ###
+#############################
+
+module "grafana" {
+  source = "./modules/lxc"
+
+  description        = "<h2>Grafana LXC</h2>"
+  node_name          = "techbrainzz"
+  protection         = false
+  start_on_boot      = var.auto_boot
+  tags               = ["monitoring", "visualization"]
+
+  cpu_cores          = 2
+  cpu_units          = 1024
+
+  datastore          = "local-lvm"
+  disk_size          = 7
+
+  hostname           = "grafana"
+  ipv4_address       = "dhcp"
+
+  memory_dedicated   = 512
+  memory_swap        = 512
+
+  bridge             = "vmbr0"
+  mac_address        = "BC:24:11:BE:00:B7"
+
+  template_file_id   = ""       # add your template ID later
+  os_type            = "debian"
+}
+
+
+#############################
 ### myspeed LXC container ###
 #############################
 
-resource "proxmox_virtual_environment_container" "myspeed" {
-  description         = "Speed Testing Software"
-  vm_id     = 112
-  hook_script_file_id = null
-  node_name           = "techbrainzz"
-  protection          = false
-  start_on_boot       = var.auto_boot
-  started             = true
-  tags                = values(local.common_tags)
-  template            = false
-  timeout_clone       = null
-  timeout_create      = null
-  timeout_delete      = null
-  timeout_update      = null
-  unprivileged        = true
-  console {
-    enabled   = true
-    tty_count = 2
-    type      = "tty"
-  }
-  disk {
-    acl           = false
-    datastore_id  = "local-lvm"
-    mount_options = []
-    quota         = false
-    replicate     = false
-    size          = 4
-  }
-  initialization {
-    hostname = "myspeed"
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-        gateway = null
-      }
-    }
-  }
-  memory {
-    dedicated = 1024
-    swap      = 512
-  }
-  network_interface {
-    bridge      = "vmbr0"
-    enabled     = true
-    firewall    = false
-    mac_address = "BC:24:11:4F:87:F4"
-    mtu         = 0
-    name        = "eth0"
-    rate_limit  = 0
-    vlan_id     = 0
-  }
-  operating_system {
-    template_file_id = ""
-    type             = "debian"
-  }
-   lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      disk,
-      operating_system[0].template_file_id,
-      operating_system[0].type,
-    ]
-  }
+module "myspeed" {
+  source = "./modules/lxc"
+
+  description        = "Speed Testing Software"
+  node_name          = "techbrainzz"
+  protection         = false
+  start_on_boot      = var.auto_boot
+  tags               = ["network", "speedtest"]
+
+  cpu_cores          = 1
+  cpu_units          = 1024
+
+  datastore          = "local-lvm"
+  disk_size          = 4
+
+  hostname           = "myspeed"
+  ipv4_address       = "dhcp"
+
+  memory_dedicated   = 1024
+  memory_swap        = 512
+
+  bridge             = "vmbr0"
+  mac_address        = "BC:24:11:4F:87:F4"
+
+  template_file_id   = ""
+  os_type            = "debian"
 }
+
+#############################
+### DocMost LXC container ###
+#############################
+
+module "docmost" {
+  source = "./modules/lxc"
+
+  description        = "Document Wiki"
+  node_name          = "techbrainzz"
+  protection         = false
+  start_on_boot      = var.auto_boot
+  tags               = ["Document"]
+
+  cpu_cores          = 3
+  cpu_units          = 1024
+
+  datastore          = "local-lvm"
+  disk_size          = 8
+
+  hostname           = "docmost"
+  ipv4_address       = "dhcp"
+
+  memory_dedicated   = 4096
+  memory_swap        = 512
+
+  bridge             = "vmbr0"
+  mac_address        = "BC:24:11:01:F3:68"
+
+  template_file_id   = ""
+  os_type            = "debian"
+}
+
+
