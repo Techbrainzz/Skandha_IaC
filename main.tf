@@ -82,7 +82,7 @@ module "docmost" {
   datastore          = "local-lvm"
   disk_size          = 8
 
-  hostname           = "myspeed"
+  hostname           = "docmost"
   ipv4_address       = "dhcp"
 
   memory_dedicated   = 4096
