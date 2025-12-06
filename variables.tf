@@ -11,3 +11,13 @@ variable "password" {
   description = "Proxmox VE password"
   type        = string  
 }
+
+#########################
+### LXC Configuration ###
+#########################
+
+variable "auto_boot" {
+  description = "Start on boot Config"
+  type = bool
+  default = true
+}
